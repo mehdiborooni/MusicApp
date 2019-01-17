@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicApp.Data;
 
-namespace MusicApp.Controllers
+using MusicApp.Models;
+
+namespace MusicApp.Controllers.AlbumController
 {
     public class AlbumController : Controller
     {
@@ -16,9 +19,70 @@ namespace MusicApp.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        
+        
+
+        public IActionResult Index(int artistId)
         {
+            
+            var artist = _db.Artists.Include(a=>a.Albums).First(a=>a.Id == artistId);
+
+            var model = artist.Albums;
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+           
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create(Album model)
+        {
+            
+            _db.Albums.Add(model);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int id)
+        {
+            var model = _db.Albums.Find(id);
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _db.Albums.Find(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Album model)
+        {
+            _db.Entry(model).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var model = _db.Albums.Find(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Album model)
+        {
+            _db.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
+

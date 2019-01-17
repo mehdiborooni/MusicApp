@@ -9,7 +9,7 @@ using MusicApp.Data;
 namespace MusicApp.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("13971027110255_musicdb")]
+    [Migration("13971027140227_musicdb")]
     partial class musicdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
