@@ -28,7 +28,9 @@ namespace MusicApp.Controllers.AlbumController
             var artist = _db.Artists.Include(a=>a.Albums).First(a=>a.Id == artistId);
 
             var model = artist.Albums;
+            ViewBag.artistId = artistId;
             return View(model);
+            
         }
 
         [HttpGet]
@@ -54,18 +56,22 @@ namespace MusicApp.Controllers.AlbumController
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int artistId, int id)
         {
             var model = _db.Albums.Find(id);
+            ViewBag.artistId = artistId;
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(Album model)
+        public IActionResult Edit(int artistId, Album model)
         {
             _db.Entry(model).State = EntityState.Modified;
             _db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),new
+            {
+                artistid = artistId
+            });
         }
 
         [HttpGet]
