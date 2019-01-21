@@ -9,6 +9,6 @@ namespace MusicApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Album> Albums { get; set; }
+        public ICollection<Album> Albums { get; set; }
     }
 }

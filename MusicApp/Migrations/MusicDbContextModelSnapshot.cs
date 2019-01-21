@@ -71,7 +71,7 @@ namespace MusicApp.Migrations
 
             modelBuilder.Entity("MusicApp.Models.Song", b =>
                 {
-                    b.HasOne("MusicApp.Models.Album")
+                    b.HasOne("MusicApp.Models.Album", "Album")
                         .WithMany("Songs")
                         .HasForeignKey("AlbumId");
                 });

@@ -9,7 +9,7 @@ using MusicApp.Data;
 namespace MusicApp.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    [Migration("13971027140227_musicdb")]
+    [Migration("13971030152723_musicdb")]
     partial class musicdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace MusicApp.Migrations
 
             modelBuilder.Entity("MusicApp.Models.Song", b =>
                 {
-                    b.HasOne("MusicApp.Models.Album")
+                    b.HasOne("MusicApp.Models.Album", "Album")
                         .WithMany("Songs")
                         .HasForeignKey("AlbumId");
                 });

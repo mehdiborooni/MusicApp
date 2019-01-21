@@ -34,19 +34,23 @@ namespace MusicApp.Controllers.AlbumController
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int artistId)
         {
-           
+            ViewBag.artistId = artistId;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Album model)
+        public IActionResult Create(int artistId,Album model)
         {
+            var artist = _db.Artists.Include(a => a.Albums).First(a => a.Id == artistId);
+            artist.Albums.Add(model);
             
-            _db.Albums.Add(model);
             _db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new
+            {
+                artistid = artistId
+            });
         }
 
         public IActionResult Details(int id)

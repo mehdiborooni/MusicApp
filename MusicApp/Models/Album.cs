@@ -11,8 +11,8 @@ namespace MusicApp.Models
         
         public string Name { get; set; }
         public int Year { get; set; }
-        public IEnumerable<Song> Songs { get; set; }
+        public IList<Song> Songs { get; set; }
 
-
+        
     }
 }

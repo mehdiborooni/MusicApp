@@ -18,25 +18,35 @@ namespace MusicApp.Controllers.SongController
             _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int albumId)
         {
-            var model = _db.Songs;
+            
+            var album = _db.Albums.Include(a => a.Songs).First(a => a.Id == albumId);
+
+            var model = album.Songs;
+            ViewBag.albumId = albumId;
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int albumId)
         {
+            ViewBag.albumId = albumId;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Song model)
+        public IActionResult Create(int albumId, Song model)
         {
 
-            _db.Songs.Add(model);
+            var album = _db.Albums.Include(a => a.Songs).First(a => a.Id == albumId);
+            album.Songs.Add(model);
+
             _db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new
+            {
+                albumid = albumId
+            });
         }
 
         public IActionResult Details(int id)

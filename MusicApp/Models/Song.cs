@@ -10,6 +10,8 @@ namespace MusicApp.Models
         public int Id { get; set; }
         
         public string Name { get; set; }
-    
+        public Album Album { get; set; }
+
+
     }
 }
